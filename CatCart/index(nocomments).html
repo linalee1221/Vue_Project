@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+    crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+    <!-- 뷰 영역 -->
+    <div id="app">
+        <!-- 머리말 부분 -->
+        <header>
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <h1> {{ sitename }} </h1>
+                </div>
+                <div class="nav navbar-nav navbar-right cart">
+                    <span class="glyphicon glyphicon-shopping-cart">{{ cartItemCount }}</span>
+                </div>
+            </div>
+        </header>
+        <!-- 본문 -->
+        <main>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-1">
+                    <figure>
+                        <img v-bind:src="product.image"></img>
+                    </figure>
+                </div>
+                <div class="col-md-6 col-md-offset-2 description">
+                    <h1 v-text="product.title"></h1>
+                    <p v-html="product.description"></p>
+                    <p class="price"> 
+                        <!-- 아래는 filters를 쓴 방법 -->
+                        <!-- {{ product.price | formatPrice }} -->
+                        {{ formatPrice }} 
+                        <!-- 위는 computed를 쓴 방법 -->
+                    </p>
+                    <button class="btn btn-primary btn-lg"
+                    v-on:click="addToCart"
+                    v-if="canAddToCart">장바구니 담기
+                  </button>
+                  <button disabled="true" class="btn btn-primary btn-lg"
+                  v-else="canAddToCart">장바구니 담기</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const APP_LOG_LIFE_CYCLE_EVENT = true;
+        let webstore = new Vue({
+            el: "#app",
+            data: {
+                sitename: "Vue.js 애완동물샵",
+                product: {
+                    id: 1011, 
+                    title: "고양이 사료, 25파운드", 
+                    description: "당신의 고양이를 위한 <em> 거부할 수 없는 </em> 유기농 25파운드 사료입니다.",
+                    price: 2000,
+                    image: "./images/product-fullsize.png",
+                    availableInventory: 5
+                },
+                cart: [],
+
+             
+            },
+            
+            methods: {
+                addToCart: function() {
+                    this.cart.push(this.product.id);
+                },
+            },
+
+            computed: {
+                formatPrice: function() {
+                    return "$" + this.product.price.toLocaleString()
+                },
+
+                cartItemCount: function() {
+                    return this.cart.length;
+                },
+
+                canAddToCart: function() {
+                    return this.product.availableInventory > this.cartItemCount;
+                }
+            },
+
+            // filters: {
+            //     formatPrice(price) {
+            //         return "$" + price.toLocaleString()
+            //     }
+            // },
+
+            
+            beforeCreate: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("beforeCreate");
+            },
+            created: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("created");
+            },
+            beforeMount: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("beforeMount");
+            },
+            mounted: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("mounted");
+            },
+            beforeUpdate: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("beforeUpdate");
+            },
+            updated: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("updated");
+            },
+            beforeDestroy: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("beforeDestroy");
+            },
+            destoryed: function() {
+                if(APP_LOG_LIFE_CYCLE_EVENT == false) {
+                    return;    
+                }
+                console.log("destoryed");
+            }
+        });
+    </script>
+</body>
+</html>

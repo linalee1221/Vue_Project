@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in list" v-bind:key="item.id">
+                ID. {{ item.id }} {{ item.name }} {{ item.hp }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                // 빈데이터 정의
+                list: []
+            },
+            created: function() {
+                // 서버에 요청해서 데이터를 가져오기
+                // axios : ajax 기술 기반 라이브러리
+                // 비동기 통신 : promise 방식
+                axios.get('list.json')
+                // 성공하면 then 안에 펑션이 실행됨
+                     .then(function(response) {
+                        // 성공하면 list 배열에 넣기
+                        console.log(this)
+                        this.list = response.data;
+                     }.bind(this))
+                    //  실패하면 catch 안에 펑션이 실행됨
+                     .catch(function(error) {
+                         console.log(error);
+                     })
+            }
+        });
+    </script>
+</body>
+</html>

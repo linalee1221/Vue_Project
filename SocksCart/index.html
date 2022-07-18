@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- vue 3.x CDN -->
+    <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
+    <!-- import style css -->
+    <link rel="stylesheet" href="assets/styles.css">
+
+</head>
+<body>
+    <div id="app">
+        <div class="nav-bar"></div>
+
+        <!-- 장바구니 카운트 수치 -->
+        <div class="cart">Cart {{ cart.length }}</div>
+
+        <!-- product component 부분 -->
+        <product-display :premium="prem"
+                         @add-to-cart="updateCart"
+                         @remove-from-cart="removeById">
+
+        </product-display>
+
+    </div>
+
+    <!-- import JS -->
+    <script src="./main.js"></script>
+    <!-- import productdisplay.js -->
+    <script src="./components/ProductDisplay.js"></script>
+     <!-- import ProductDetails.js -->
+    <script src="./components/ProductDetails.js"></script>
+    <!-- import ReviewForm.js -->
+    <script src="./components/ReviewForm.js"></script>
+    <!-- import ReviewList.js -->
+    <script src="./components/ReviewList.js"></script>
+
+    <!-- Mount App -->
+    <!-- 2.x : new Vue({el: '#app'}) -->
+    <!-- 3.x : app.mount("#app") -->
+    <script>
+        const mountedApp = app.mount("#app")
+    </script>
+</body>
+</html>
